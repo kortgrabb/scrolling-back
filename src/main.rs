@@ -37,11 +37,15 @@ impl ThemeInfo {
 
 fn main() {
     let args = env::args().collect::<Vec<String>>();
-    let speed = if args.len() > 1 {
-        args[1].parse::<u32>().unwrap_or_else(|_| {
-            println!("Invalid speed: {}", args[1]);
-            std::process::exit(1);
-        })
+    // if speed is not provided, default to 100 (provide descriptive error messages)
+    let speed: u32 = if args.len() > 1 {
+        match args[1].parse::<u32>() {
+            Ok(speed) => speed,
+            Err(_) => {
+                println!("Invalid speed: {}", args[1]);
+                std::process::exit(1);
+            }
+        }
     } else {
         100
     };
