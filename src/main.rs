@@ -15,7 +15,6 @@ enum Theme {
     Christmas,
     Easter,
     Halloween,
-    Love,
     NewYear,
     Thanksgiving,
     Valentine,
@@ -115,7 +114,6 @@ fn init_themes() -> Vec<ThemeInfo> {
     themes.push(ThemeInfo::new("christmas", load_theme(Theme::Christmas)));
     themes.push(ThemeInfo::new("easter", load_theme(Theme::Easter)));
     themes.push(ThemeInfo::new("halloween", load_theme(Theme::Halloween)));
-    themes.push(ThemeInfo::new("love", load_theme(Theme::Love)));
     themes.push(ThemeInfo::new("newyear", load_theme(Theme::NewYear)));
     themes.push(ThemeInfo::new("thanksgiving", load_theme(Theme::Thanksgiving)));
     themes.push(ThemeInfo::new("valentine", load_theme(Theme::Valentine)));
@@ -143,7 +141,6 @@ fn load_theme(theme: Theme) -> Vec<char> {
             chars.extend(load_theme(Theme::Christmas));
             chars.extend(load_theme(Theme::Easter));
             chars.extend(load_theme(Theme::Halloween));
-            chars.extend(load_theme(Theme::Love));
             chars.extend(load_theme(Theme::NewYear));
             chars.extend(load_theme(Theme::Thanksgiving));
             chars.extend(load_theme(Theme::Valentine));
@@ -232,14 +229,6 @@ fn load_theme(theme: Theme) -> Vec<char> {
 
         Theme::Halloween => {
             for i in 0x1F383..=0x1F3C6 {
-                if let Some(c) = char::from_u32(i) {
-                    chars.push(c);
-                }
-            }
-        }
-
-        Theme::Love => {
-            for i in 0x1F48C..=0x1F49F {
                 if let Some(c) = char::from_u32(i) {
                     chars.push(c);
                 }
