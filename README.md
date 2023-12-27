@@ -1,4 +1,3 @@
-```markdown
 # Scrolling Back
 
 This is a Rust project that generates a scrolling background with different themes.
