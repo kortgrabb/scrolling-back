@@ -37,7 +37,6 @@ impl ThemeInfo {
 
 fn main() {
     let args = env::args().collect::<Vec<String>>();
-    // if speed is not provided, default to 100 (provide descriptive error messages)
     let speed: u32 = if args.len() > 1 {
         match args[1].parse::<u32>() {
             Ok(speed) => speed,
