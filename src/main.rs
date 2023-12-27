@@ -55,23 +55,7 @@ fn main() {
         "all"
     };
 
-    let mut themes = Vec::new();
-    themes.push(ThemeInfo::new("all", load_theme(Theme::All)));
-    themes.push(ThemeInfo::new("lower", load_theme(Theme::Lower)));
-    themes.push(ThemeInfo::new("upper", load_theme(Theme::Upper)));
-    themes.push(ThemeInfo::new("numbers", load_theme(Theme::Numbers)));
-    themes.push(ThemeInfo::new("letters", load_theme(Theme::Letters)));
-    themes.push(ThemeInfo::new("smileys", load_theme(Theme::Smileys)));
-    themes.push(ThemeInfo::new("food", load_theme(Theme::Food)));
-    themes.push(ThemeInfo::new("animals", load_theme(Theme::Animals)));
-    themes.push(ThemeInfo::new("ascii", load_theme(Theme::Ascii)));
-    themes.push(ThemeInfo::new("christmas", load_theme(Theme::Christmas)));
-    themes.push(ThemeInfo::new("easter", load_theme(Theme::Easter)));
-    themes.push(ThemeInfo::new("halloween", load_theme(Theme::Halloween)));
-    themes.push(ThemeInfo::new("love", load_theme(Theme::Love)));
-    themes.push(ThemeInfo::new("newyear", load_theme(Theme::NewYear)));
-    themes.push(ThemeInfo::new("thanksgiving", load_theme(Theme::Thanksgiving)));
-    themes.push(ThemeInfo::new("valentine", load_theme(Theme::Valentine)));
+    let themes = init_themes();
 
     let mut chars = Vec::new();
     for theme_info in &themes {
@@ -114,6 +98,29 @@ fn scroll_background(chars: &Vec<char>) {
     }
     
     println!("{}", line);
+}
+
+fn init_themes() -> Vec<ThemeInfo> {
+    let mut themes = Vec::new();
+
+    themes.push(ThemeInfo::new("all", load_theme(Theme::All)));
+    themes.push(ThemeInfo::new("lower", load_theme(Theme::Lower)));
+    themes.push(ThemeInfo::new("upper", load_theme(Theme::Upper)));
+    themes.push(ThemeInfo::new("numbers", load_theme(Theme::Numbers)));
+    themes.push(ThemeInfo::new("letters", load_theme(Theme::Letters)));
+    themes.push(ThemeInfo::new("smileys", load_theme(Theme::Smileys)));
+    themes.push(ThemeInfo::new("food", load_theme(Theme::Food)));
+    themes.push(ThemeInfo::new("animals", load_theme(Theme::Animals)));
+    themes.push(ThemeInfo::new("ascii", load_theme(Theme::Ascii)));
+    themes.push(ThemeInfo::new("christmas", load_theme(Theme::Christmas)));
+    themes.push(ThemeInfo::new("easter", load_theme(Theme::Easter)));
+    themes.push(ThemeInfo::new("halloween", load_theme(Theme::Halloween)));
+    themes.push(ThemeInfo::new("love", load_theme(Theme::Love)));
+    themes.push(ThemeInfo::new("newyear", load_theme(Theme::NewYear)));
+    themes.push(ThemeInfo::new("thanksgiving", load_theme(Theme::Thanksgiving)));
+    themes.push(ThemeInfo::new("valentine", load_theme(Theme::Valentine)));
+
+    themes
 }
 
 fn clear_screen() {
