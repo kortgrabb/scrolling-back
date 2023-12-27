@@ -1,6 +1,7 @@
 use std::{char, env};
 
 use rand::Rng;
+use serde::{Serialize, Deserialize};
 
 enum Theme {
     All,
@@ -21,17 +22,32 @@ enum Theme {
 }
 
 struct ThemeInfo {
-    name: &'static str,
+    name: String,
     chars: Vec<char>,
 }
 
 impl ThemeInfo {
-    fn new(name: &'static str, chars: Vec<char>) -> Self {
+    fn new(name: String, chars: Vec<char>) -> Self {
         Self {
             name,
             chars,
         }
     }
+}
+
+#[derive(Serialize, Deserialize)]
+struct CustomTheme {
+    name: String,
+    chars: Vec<char>,
+}
+
+impl Default for CustomTheme {
+    fn default() -> Self {
+        Self {
+            name: "New Theme".to_string(),
+            chars: load_theme(Theme::Ascii),
+        }
+    }    
 }
 
 fn main() {
@@ -48,6 +64,7 @@ fn main() {
         100
     };
 
+    
     let theme: &str = if args.len() > 2 {
         &args[2]
     } else {
@@ -55,7 +72,7 @@ fn main() {
     };
 
     let themes = init_themes();
-
+    
     let mut chars = Vec::new();
     for theme_info in &themes {
         if theme_info.name == theme {
@@ -102,27 +119,39 @@ fn scroll_background(chars: &Vec<char>) {
 fn init_themes() -> Vec<ThemeInfo> {
     let mut themes = Vec::new();
 
-    themes.push(ThemeInfo::new("all", load_theme(Theme::All)));
-    themes.push(ThemeInfo::new("lower", load_theme(Theme::Lower)));
-    themes.push(ThemeInfo::new("upper", load_theme(Theme::Upper)));
-    themes.push(ThemeInfo::new("numbers", load_theme(Theme::Numbers)));
-    themes.push(ThemeInfo::new("letters", load_theme(Theme::Letters)));
-    themes.push(ThemeInfo::new("smileys", load_theme(Theme::Smileys)));
-    themes.push(ThemeInfo::new("food", load_theme(Theme::Food)));
-    themes.push(ThemeInfo::new("animals", load_theme(Theme::Animals)));
-    themes.push(ThemeInfo::new("ascii", load_theme(Theme::Ascii)));
-    themes.push(ThemeInfo::new("christmas", load_theme(Theme::Christmas)));
-    themes.push(ThemeInfo::new("easter", load_theme(Theme::Easter)));
-    themes.push(ThemeInfo::new("halloween", load_theme(Theme::Halloween)));
-    themes.push(ThemeInfo::new("newyear", load_theme(Theme::NewYear)));
-    themes.push(ThemeInfo::new("thanksgiving", load_theme(Theme::Thanksgiving)));
-    themes.push(ThemeInfo::new("valentine", load_theme(Theme::Valentine)));
+    themes.push(ThemeInfo::new("all".to_string(), load_theme(Theme::All)));
+    themes.push(ThemeInfo::new("lower".to_string(), load_theme(Theme::Lower)));
+    themes.push(ThemeInfo::new("upper".to_string(), load_theme(Theme::Upper)));
+    themes.push(ThemeInfo::new("numbers".to_string(), load_theme(Theme::Numbers)));
+    themes.push(ThemeInfo::new("letters".to_string(), load_theme(Theme::Letters)));
+    themes.push(ThemeInfo::new("smileys".to_string(), load_theme(Theme::Smileys)));
+    themes.push(ThemeInfo::new("food".to_string(), load_theme(Theme::Food)));
+    themes.push(ThemeInfo::new("animals".to_string(), load_theme(Theme::Animals)));
+    themes.push(ThemeInfo::new("ascii".to_string(), load_theme(Theme::Ascii)));
+    themes.push(ThemeInfo::new("christmas".to_string(), load_theme(Theme::Christmas)));
+    themes.push(ThemeInfo::new("easter".to_string(), load_theme(Theme::Easter)));
+    themes.push(ThemeInfo::new("halloween".to_string(), load_theme(Theme::Halloween)));
+    themes.push(ThemeInfo::new("newyear".to_string(), load_theme(Theme::NewYear)));
+    themes.push(ThemeInfo::new("thanksgiving".to_string(), load_theme(Theme::Thanksgiving)));
+    themes.push(ThemeInfo::new("valentine".to_string(), load_theme(Theme::Valentine)));
 
     themes
 }
 
 fn clear_screen() {
     print!("\x1B[2J\x1B[1;1H");
+}
+
+fn load_custom_themes() -> Vec<ThemeInfo> {
+    let cfg = confy::load::<Vec<CustomTheme>>("scrolling-background", "custom-themes").unwrap();
+
+    let mut themes = Vec::new();
+
+    for custom_theme in cfg {
+        themes.push(ThemeInfo::new(custom_theme.name, custom_theme.chars));
+    }
+
+    themes
 }
 
 fn load_theme(theme: Theme) -> Vec<char> {
