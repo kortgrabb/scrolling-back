@@ -220,11 +220,25 @@ fn load_theme(theme: Theme) -> Vec<char> {
         }
 
         Theme::Easter => {
-            for i in 0x1F383..=0x1F3C6 {
-                if let Some(c) = char::from_u32(i) {
-                    chars.push(c);
-                }
-            }
+            chars.push('🐰');
+            chars.push('🥚');
+            chars.push('🐣');
+            chars.push('🐤');
+            chars.push('🐥');
+            chars.push('🐇');
+            chars.push('🌷');
+            chars.push('🌸');
+            chars.push('🌼');
+            chars.push('🌻');
+            chars.push('🌺');
+            chars.push('🌹');
+            chars.push('🥀');
+            chars.push('🌱');
+            chars.push('🌿');
+            chars.push('🍀');
+            chars.push('🍃');
+            chars.push('🍂');
+            chars.push('🍁');
         }
 
         Theme::Halloween => {
