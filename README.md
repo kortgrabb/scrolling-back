@@ -22,7 +22,7 @@ cd scrolling-back
 Build the project:
 
 ```sh
-cargo build
+cargo build --release
 ```
 
 Run the project:
