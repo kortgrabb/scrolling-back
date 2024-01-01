@@ -91,7 +91,7 @@ fn main() {
         std::process::exit(1);
     }
 
-    clear_screen();
+    setup_term();
     println!("vec size: {}", chars.len());
     loop {
         scroll_background(&chars);
@@ -138,21 +138,25 @@ fn init_themes() -> Vec<ThemeInfo> {
     themes
 }
 
-fn clear_screen() {
+fn setup_term() {
+    // clear the screen
     print!("\x1B[2J\x1B[1;1H");
+
+    // hide cursor
+    print!("\x1B[?25l");
 }
 
-fn load_custom_themes() -> Vec<ThemeInfo> {
-    let cfg = confy::load::<Vec<CustomTheme>>("scrolling-background", "custom-themes").unwrap();
+// fn load_custom_themes() -> Vec<ThemeInfo> {
+//     let cfg = confy::load::<Vec<CustomTheme>>("scrolling-background", "custom-themes").unwrap();
 
-    let mut themes = Vec::new();
+//     let mut themes = Vec::new();
 
-    for custom_theme in cfg {
-        themes.push(ThemeInfo::new(custom_theme.name, custom_theme.chars));
-    }
+//     for custom_theme in cfg {
+//         themes.push(ThemeInfo::new(custom_theme.name, custom_theme.chars));
+//     }
 
-    themes
-}
+//     themes
+// }
 
 fn load_theme(theme: Theme) -> Vec<char> {
 
